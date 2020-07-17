@@ -1,0 +1,44 @@
+<html>
+    <head>
+        <title>Combiner thing</title>
+    </head>
+    <body>
+        <textarea id="text"></textarea>
+        <button id="sub">Submit</button>
+        <textarea id="result"></textarea>
+        <script type="text/javascript">
+        function dowork() {
+            var text = document.getElementById("text").value;
+            text = text.split("\n");
+            // text = text.sort((a, b) => {
+            //     return a.length < b.length ? -1 : 1;
+            // })
+            var res = text.reduce((prev, curr) => {
+                if (!prev.length) {
+                    prev.push(curr);
+                    return prev;
+                }
+                var lowest = 0;
+                var len = 350;
+                prev.forEach((c, i) => {
+                    if (c.length < len) {
+                        len = c.length;
+                        lowest = i;
+                    } 
+                })
+                var prevLength = len;
+                // var prevLength = prev[prev.length-1].length;
+                if (curr.length + prevLength <= 349) {
+                    // prev[prev.length-1] = prev[prev.length-1] + " " + curr;
+                    prev[lowest] = prev[lowest] + " " + curr;
+                } else {
+                    prev.push(curr);
+                }
+                return prev;
+            }, []);
+            document.getElementById("result").value = res.join("\n");
+        }
+        document.getElementById("sub").addEventListener("click", dowork);
+        </script>
+    </body>
+</html>
